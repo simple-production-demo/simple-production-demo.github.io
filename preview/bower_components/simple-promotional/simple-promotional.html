@@ -1,0 +1,88 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+
+<dom-module id="simple-promotional">
+    <template>
+    <style>
+      :host {
+        display: flex;
+        width: 736px;
+        height: 170px;
+        overflow: hidden;
+      }
+
+      .left-column {
+        
+      }
+
+      .right-column {
+        color: #000;
+      }
+
+      .banner-image {
+        float: left;
+        width: 300px;
+      }
+
+      .carriers {
+        margin-top: 8px;
+      }
+
+      a {
+        cursor: pointer;
+        margin-right: 16px; 
+      }
+
+      .carriers img {
+        margin-right: 16px;
+      }
+    </style>
+
+    <iron-ajax auto="" url="https://cdn.contentful.com/spaces/st4fc48gu9sq/entries/[[entryId]]?access_token=e113be30e2aafd46deb5f7a6ac536d0603f1f6b7b2eb73245267b29767ab272d" handle-as="json" last-response="{{data}}"></iron-ajax>
+
+      <div class="left-column">
+      <img class="banner-image" src="http://multimedia.bbycastatic.ca/multimedia/products/1500x1500/104/10486/10486220_2.jpg" alt="">
+    </div>
+    <div class="right-column">
+      <h2>{{data.fields.title}}</h2>
+      <div class="carriers"><a>Shop Now</a>
+      <img src="http://images.bbycastatic.ca/sf/projects/_content/_weekly/home/applebanner/assets/carriers/koodo-logo-m.png" height="12" class="margin-xs-right"><img src="http://images.bbycastatic.ca/sf/projects/_content/_weekly/home/applebanner/assets/carriers/virgin-logo-m.png" height="16" class="margin-xs-right"></div>
+    </div>
+  </template>
+
+    <script>
+        /**
+         * `simple-promotional`
+         * A simple banner to promote products hooked with Firebase
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+
+        class SimplePromotional extends Polymer.Element {
+            static get is() {
+                return 'simple-promotional';
+            }
+            static get properties() {
+                return {
+                    entryId: {
+                        type: String
+                    }
+                };
+            }
+
+            static get observers() {
+                return [
+                    "dataChanged(data)"
+                ];
+            }
+
+            dataChanged(data) {
+                console.log(data);
+            }
+        }
+
+        window.customElements.define(SimplePromotional.is, SimplePromotional);
+    </script>
+</dom-module>
