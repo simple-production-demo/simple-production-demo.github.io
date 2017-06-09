@@ -38,26 +38,29 @@
     <div class="card">
       <banner-timeline src="/sampleData.json" selected={{selected}}></banner-timeline>
     </div>
-    <div class="card centred">
-      <div class="banner-preview">
-        <ipad-banner id="banner" entry-id="[[entryId]]"></ipad-banner>
-        <div class="banner-info">
-          <dl>
-            <dt>ID</dt>
-            <dd>{{selected}}</dd>
+        <template is="dom-if" if="{{selected}}">
+            <div class="card centred">
+                <div class="banner-preview">
+                    <ipad-banner id="banner" entry-id="[[selected]]"></ipad-banner>
+                    <div class="banner-info">
+                        <dl>
+                            <dt>ID</dt>
+                            <dd>{{selected}}</dd>
 
-            <dt>Title</dt>
-            <dd>A Title</dd>
+                            <dt>Title</dt>
+                            <dd>A Title</dd>
 
-            <dt>Start</dt>
-            <dd>01/01/2018</dd>
+                            <dt>Start</dt>
+                            <dd>01/01/2018</dd>
 
-            <dt>End</dt>
-            <dd>01/01/2018</dd>
-          </dl>
-        </div>
-      </div>
-    </div>
+                            <dt>End</dt>
+                            <dd>01/01/2018</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </template>
+
   </template>
 
     <script>

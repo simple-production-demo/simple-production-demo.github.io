@@ -39,8 +39,8 @@
       h3 {
         font-size: 2em;
         font-weight: 300;
-        line-height: 2em;
-        margin: 0;
+        line-height: 1em;
+        margin: 0 0 10px;
         color: #4d4d4f;
       }
 
@@ -95,7 +95,7 @@
 
     <iron-ajax
         auto
-        url="http://dev-blog-bbyca.ca.bestbuy.com/wp-json/wp/v2/banners/134964"
+        url="http://dev-blog-bbyca.ca.bestbuy.com/wp-json/wp/v2/banners/{{entryId}}"
         handle-as="json"
         last-response="{{data}}"></iron-ajax>
 
@@ -120,14 +120,6 @@
   </template>
 
   <script>
-    /**
-     * `simple-promotional`
-     * A simple banner to promote products hooked with Firebase
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
 
     class SimplePromotional extends Polymer.Element {
       static get is() {
