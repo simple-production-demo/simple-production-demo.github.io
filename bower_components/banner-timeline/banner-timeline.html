@@ -27,7 +27,7 @@
           overflow: scroll;
         }
         .entries {
-          margin-top: 75px;
+          margin-top: 120px;
           width: 100%;
           position: absolute;
           top: 0;
@@ -66,7 +66,7 @@
         <grid-lines grid-number={{gridCols}} scale={{scale}} start="{{start}}" end="{{end}}"></grid-lines>
         <div class="entries">
           <template is="dom-repeat" items="{{entries}}" id="entryListContainer">
-            <banner-entry content="[[item]]" position="[[_getPos(item.startDate, item.endDate, start, index)]]" scale=[[scale]] id="[[item.id]]" selected="{{selected}}"></banner-entry>
+            <banner-entry content="[[item]]" position="[[_getPos(item.meta.start_date, item.meta.end_date, start, index)]]" scale=[[scale]] id="[[item.id]]" selected="{{selected}}"></banner-entry>
           </template>
         </div>
       </div>
