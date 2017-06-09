@@ -3,6 +3,13 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
 <dom-module id="ipad-banner">
   <template>
+    <iron-ajax
+            auto
+            url="http://dev-blog-bbyca.ca.bestbuy.com/wp-json/wp/v2/banners/{{entryId}}"
+            handle-as="json"
+            last-response="{{data}}"></iron-ajax>
+
+
     <style>
       :host {
         max-width: 600px;
@@ -92,12 +99,6 @@
         }
       }
     </style>
-
-    <iron-ajax
-        auto
-        url="http://dev-blog-bbyca.ca.bestbuy.com/wp-json/wp/v2/banners/{{entryId}}"
-        handle-as="json"
-        last-response="{{data}}"></iron-ajax>
 
     <div class="banner">
       <div class="image-column">

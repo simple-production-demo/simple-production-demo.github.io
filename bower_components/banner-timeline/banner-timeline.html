@@ -4,7 +4,7 @@
   <link href="../../bower_components/polymer/polymer.html" rel="import">
   <link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
   <link href="../../bower_components/paper-slider/paper-slider.html" rel="import">
-  <link rel="import" href="../bower_components/paper-input/paper-input.html">
+  <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link href="./elements/grid-lines.html" rel="import">
@@ -60,7 +60,7 @@
         <paper-slider pin value="{{scale}}" max=499 min="25"></paper-slider>
         <paper-input label="start date" value="{{start}}"></paper-input>
         <paper-input label="end date" value="{{end}}"></paper-input>
-        <paper-input label="selected ID" value="{{selected}}"></paper-input>
+        <paper-input label="banner ID" value="{{selected}}"></paper-input>
       </header>
       <div class="grid-container">
         <grid-lines grid-number={{gridCols}} scale={{scale}} start="{{start}}" end="{{end}}"></grid-lines>
