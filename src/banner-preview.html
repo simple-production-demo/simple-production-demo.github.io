@@ -1,0 +1,71 @@
+<link rel="import" href="../banners/ipad-banner.html">
+<link rel="import" href="../bower_components/banner-timeline/banner-timeline.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="banner-preview">
+    <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+      h2 {
+        font-weight: 200;
+      }
+      .banner-preview {
+        display: flex;
+        align-items: center;
+      }
+      dt {
+        float: left;
+        clear: left;
+        width: 100px;
+        text-align: right;
+        color: #333;
+        font-weight: 200;
+      }
+      dt::after {
+        content: ":";
+      }
+      dd {
+        font-weight: 200;
+        margin: 0 0 0 110px;
+        padding: 0 0 0.5em 0;
+        height: 1em;
+      }
+    </style>
+
+    <div class="card">
+      <banner-timeline src="/sampleData.json" selected={{selected}}></banner-timeline>
+    </div>
+    <div class="card centred">
+      <div class="banner-preview">
+        <ipad-banner id="banner" entry-id="[[entryId]]"></ipad-banner>
+        <div class="banner-info">
+          <dl>
+            <dt>ID</dt>
+            <dd>{{selected}}</dd>
+
+            <dt>Title</dt>
+            <dd>A Title</dd>
+
+            <dt>Start</dt>
+            <dd>01/01/2018</dd>
+
+            <dt>End</dt>
+            <dd>01/01/2018</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </template>
+
+    <script>
+        class BannerPreview extends Polymer.Element {
+            static get is() {
+                return 'banner-preview';
+            }
+        }
+        window.customElements.define(BannerPreview.is, BannerPreview);
+    </script>
+</dom-module>

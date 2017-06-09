@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="../../bower_components/polymer/polymer.html" rel="import">
+  <link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
+  <link href="../../bower_components/paper-slider/paper-slider.html" rel="import">
+  <link rel="import" href="../bower_components/paper-input/paper-input.html">
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link href="./elements/grid-lines.html" rel="import">
+  <link href="./elements/banner-entry.html" rel="import">
+</head>
+
+<dom-module id="banner-timeline">
+
+    <template>
+      <style>
+        header {
+          position: relative;
+        }
+        .grid-container {
+          font-family: roboto;
+          position: relative;
+          width: 100%;
+          height: 200px;
+          padding: 100px 0 0;
+          overflow: scroll;
+        }
+        .entries {
+          margin-top: 75px;
+          width: 100%;
+          position: absolute;
+          top: 0;
+        }
+
+        paper-input {
+          width: 200px;
+          display: inline-block;
+          margin-right: 20px;
+        }
+
+        paper-slider {
+          width: 230px;
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+
+
+      </style>
+
+      <iron-ajax
+              auto
+              url="{{src}}"
+              handle-as="json"
+              last-response="{{entries}}">
+      </iron-ajax>
+
+      <header>
+        <paper-slider pin value="{{scale}}" max=499 min="25"></paper-slider>
+        <paper-input label="start date" value="{{start}}"></paper-input>
+        <paper-input label="end date" value="{{end}}"></paper-input>
+        <paper-input label="selected ID" value="{{selected}}"></paper-input>
+      </header>
+      <div class="grid-container">
+        <grid-lines grid-number={{gridCols}} scale={{scale}} start="{{start}}" end="{{end}}"></grid-lines>
+        <div class="entries">
+          <template is="dom-repeat" items="{{entries}}" id="entryListContainer">
+            <banner-entry content="[[item]]" position="[[_getPos(item.startDate, item.endDate, start, index)]]" scale=[[scale]] id="[[item.id]]" selected="{{selected}}"></banner-entry>
+          </template>
+        </div>
+      </div>
+
+  </template>
+  <script>
+  function getStackIndex(entries, index, start, end) {
+    var overlaps = entries.filter(function(testEntry, i) {
+      var dates = {
+        entry: {
+          start: new Date(start),
+          end: new Date(end)
+        },
+        testEntry: {
+          start: new Date(testEntry.startDate),
+          end: new Date(testEntry.endDate)
+        }
+      }
+      //(StartA <= EndB) and (EndA >= StartB)
+      return (index<=i && (dates.entry.start<=dates.testEntry.end && dates.entry.end>=dates.testEntry.start))
+    });
+    return (overlaps.length);
+  }
+    Polymer({
+      is: "banner-timeline",
+      _getPos: function(start, end, rangeStart, index) {
+        var day = 60 * 60 * 24 * 1000,
+            os = new Date().getTimezoneOffset() * 60000;
+
+        return {
+          left: ((new Date(start)-new Date(rangeStart))/day * 10),
+          width: ((new Date(end)-new Date(start))/day * 10),
+          stackIndex: getStackIndex(this.entries, index, start, end)
+        };
+      },
+      _resetGrid: function() {
+        this.$.entryListContainer.render();
+      },
+      properties: {
+        gridCols: {
+          type: Number,
+          value: function() {
+            var props = this.properties,
+                day = 60 * 60 * 24 * 1000,
+                noDays = (new Date(props.end.value)-new Date(props.start.value))/day;
+            return (noDays>365 ? 365 : noDays)
+          }
+        },
+        start: {
+          type: String,
+          value: '2017-05-31',
+          observer: '_resetGrid'
+        },
+        end: {
+          type: String,
+          value: '2017-06-30',
+          observer: '_resetGrid'
+        },
+        scale: {
+          type: Number,
+          value: 200
+        },
+        src: {
+          type: String,
+          value: ""
+        },
+        selected: {
+          type: Number,
+          notify: true
+        }
+      }
+    });
+  </script>
+
+</dom-module>

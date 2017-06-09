@@ -1,0 +1,20 @@
+{
+  "name": "polymer-starter-kit",
+  "authors": [
+    "The Polymer Authors"
+  ],
+  "license": "https://polymer.github.io/LICENSE.txt",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0-rc.2",
+    "iron-ajax": "PolymerElements/iron-ajax#^2.0.1",
+    "paper-slider": "git://github.com/PolymerElements/paper-slider",
+    "paper-input": "PolymerElements/paper-input#^2.0.0"
+  },
+  "resolutions": {
+    "polymer": "^2.0.0-rc.3"
+  },
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0-prerelease.7"
+  },
+  "private": true
+}

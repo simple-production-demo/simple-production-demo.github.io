@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "New iPhone 8 available now!",
+    "description": "blah blah blah",
+    "link": "http://www.bestbuy.com/iphone10",
+    "img": "http://path/to/an/image.jpg",
+    "startDate": "2017-06-04",
+    "endDate": "2017-06-11"
+  },
+  {
+    "id": 2,
+    "title": "New iPhone 9 available now!",
+    "description": "blah blah blah",
+    "link": "http://www.bestbuy.com/iphone10",
+    "img": "http://path/to/an/image.jpg",
+    "startDate": "2017-06-02T09:00:00",
+    "endDate": "2017-06-11"
+  }
+]

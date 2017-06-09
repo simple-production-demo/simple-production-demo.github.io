@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="../../../bower_components/polymer/polymer.html" rel="import">
+</head>
+
+<dom-module id="grid-lines">
+    <template>
+      <style>
+        #grid_target {
+          display: flex;
+          height: 100%;
+        }
+        .grid {
+          display: block;
+          position: relative;
+          box-sizing: border-box;
+          position: relative;
+          border: 1px solid gray;
+          border-right: 1px dashed black;
+          border-left: 0;
+          width: var(--grid-lines-width, 10%);
+          min-width: var(--grid-lines-width, 10%);
+          height: 100%;
+          transition: all .3s;
+        }
+        .grid:first-child {
+          border-left: 1px solid black;
+        }
+        .grid:nth-child(odd) {
+          background-color: rgba(147, 173, 215, 0.1);
+        }
+        .grid .timestamp {
+          position: absolute;
+          top: -70px;
+          left: -50px;
+          text-align: right;
+          transform: rotate(90deg);
+          display: content;
+          font-size: 11px;
+          width: 100px;
+        }
+        .grid:first-child .timestamp {
+          left:-45px;
+        }
+        .grid .sub {
+          float: left;
+          position: relative;
+          height: 100%;
+          box-sizing: border-box;
+          width: 8.333%;
+          border-right: 1px dashed black;
+          opacity: 0;
+          transition: all 1s;
+        }
+        .grid .sub .timestamp {
+          position: absolute;
+          width: 50px;
+          left: auto;
+          right: -25px;
+          top: -45px;
+          font-size: 11px;
+        }
+        .zoom1 .grid .sub {
+          opacity: 0;
+        }
+        .zoom1 .grid .sub:nth-child(7n) {
+          opacity: .2;
+        }
+        .zoom2 .grid .sub:nth-child(2n+1) {
+          opacity: .2;
+        }
+        .zoom3 .grid .sub:nth-child(1n) {
+          opacity: .2;
+        }
+        .zoom4 .grid .sub {
+          opacity: .2;
+        }
+      </style>
+      <div id="grid_target" class$={{zoomClass}}></div>
+  </template>
+  <script>
+    Polymer({
+      is: "grid-lines",
+      properties: {
+        start: {
+          type: String,
+          value: '2017-01-01',
+          observer: '_resetGrid'
+        },
+        end: {
+          type: String,
+          value: '2017-01-01',
+          observer: '_resetGrid'
+        },
+        scale: {
+          type: Number,
+          value: 1,
+          observer: '_setScale'
+        },
+        zoomClass: {
+          type: String,
+          value: "zoom1",
+        }
+      },
+      _resetGrid: function() {
+        Grid.build(this, this.start, this.end);
+      },
+      _setScale: function() {
+        this.updateStyles({'--grid-lines-width': (this.scale/10)+'%'});
+        this.updateStyles({'--grid-lines-sub-opacity': (this.scale>200)?.3:0});
+        this.zoomClass = "zoom"+Math.floor(this.scale/100);
+      }
+    });
+
+    var Grid = (function() {
+      var day = 60 * 60 * 24 * 1000,
+      monthNames = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+      ];
+
+      function formatDate(date, monthList) {
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+
+        return day + ' ' + monthList[monthIndex] + ' ' + year;
+      }
+      var GridLine = function(index, startDate) {
+        var gl = document.createElement('div'),
+            displayDate = new Date(startDate);
+            displayDate.setDate(displayDate.getDate() + 1);
+
+        displayDate.setDate(displayDate.getDate()+index);
+        gl.classList.add('grid');
+        gl.innerHTML="<div class='timestamp'>- "+ formatDate(displayDate, monthNames) +" -</div>";
+
+
+        for(var i=1; i<12; i++) {
+          var sl = document.createElement('div');
+          sl.classList.add('sub');
+          sl.innerHTML="<div class='timestamp'>"+(i*2)+":00</div>"
+          gl.appendChild(sl);
+        }
+        return gl;
+      }
+
+      return {
+        build: function(el, startDate, endDate) {
+          var n = Math.min((new Date(endDate) - new Date(startDate))/day,365),
+              target = el.$.grid_target;
+          target.innerHTML="";
+          for(var i = 0; i<n; i++) {
+            target.appendChild(new GridLine(i, startDate));
+          }
+        }
+      }
+    }());
+  </script>
+</dom-module>

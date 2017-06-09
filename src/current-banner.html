@@ -1,0 +1,74 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../banners/ipad-banner.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="current-banner">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+
+      .banner-preview {
+        display: flex;
+        align-items: center;
+      }
+      dt {
+        float: left;
+        clear: left;
+        width: 100px;
+        text-align: right;
+        color: #333;
+        font-weight: 200;
+      }
+      dt::after {
+        content: ":";
+      }
+      dd {
+        font-weight: 200;
+        margin: 0 0 0 110px;
+        padding: 0 0 0.5em 0;
+        height: 1em;
+      }
+    </style>
+
+    <div class="card centred">
+      <div class="banner-preview">
+        <ipad-banner id="banner" entry-id="[[entryId]]"></ipad-banner>
+        <div class="banner-info">
+          <dl>
+            <dt>ID</dt>
+            <dd>{{selected}}</dd>
+
+            <dt>Title</dt>
+            <dd>A Title</dd>
+
+            <dt>Start</dt>
+            <dd>01/01/2018</dd>
+
+            <dt>End</dt>
+            <dd>01/01/2018</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    class CurrentBanner extends Polymer.Element {
+      static get is() { return 'current-banner'; }
+    }
+
+    window.customElements.define(CurrentBanner.is, CurrentBanner);
+  </script>
+</dom-module>
