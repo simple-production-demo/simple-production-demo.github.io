@@ -1,11 +1,11 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
-<dom-module id="ipad-banner">
+<dom-module id="current-ipad-banner">
   <template>
     <iron-ajax
             auto
-            url="http://dev-blog-bbyca.ca.bestbuy.com/wp-json/wp/v2/banners/{{entryId}}"
+            url="http://dev-blog-bbyca.ca.bestbuy.com/wp-json/my-shop/v1/banners-current"
             handle-as="json"
             last-response="{{data}}"></iron-ajax>
 
@@ -108,7 +108,7 @@
              src="http://multimedia.bbycastatic.ca/multimedia/products/1500x1500/104/10486/10486204_2.jpg">
       </div>
       <div class="promo-column">
-        <h3>[[data.title.rendered]]</h3>
+        <h3>[[postTitle]]</h3>
         <p>
           [[data.excerpt.rendered]]
         </p>
@@ -122,15 +122,22 @@
 
   <script>
 
-    class SimplePromotional extends Polymer.Element {
+    class SimplePromotional2 extends Polymer.Element {
       static get is() {
-        return 'ipad-banner';
+        return 'current-ipad-banner';
       }
 
       static get properties() {
         return {
           entryId: {
             type: String
+          },
+          postTitle: {
+            type: String,
+            computed: 'getPostTitle(data)'
+          },
+          data: {
+            type: Array
           }
         };
       }
@@ -144,8 +151,12 @@
       dataChanged(data) {
         console.log(data);
       }
+
+      getPostTitle(response) {
+         return response.length > 0 ? response[0].post_title : "";
+      }
     }
 
-    window.customElements.define(SimplePromotional.is, SimplePromotional);
+    window.customElements.define(SimplePromotional2.is, SimplePromotional2);
   </script>
 </dom-module>
