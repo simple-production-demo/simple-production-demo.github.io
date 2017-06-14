@@ -7,7 +7,8 @@
             auto
             url="//dev-blog-bbyca.ca.bestbuy.com/wp-json/wp/v2/banners/{{entryId}}"
             handle-as="json"
-            last-response="{{data}}"></iron-ajax>
+            last-response="{{data}}"
+            on-error="_setFallback"></iron-ajax>
 
 
     <style>
@@ -17,6 +18,7 @@
         border: 1px solid #ccc;
         padding: 10px;
         font-size: 15px;
+        text-align: left;
       }
       .banner {
         align-content: flex-start;
@@ -111,7 +113,7 @@
         <h3>[[data.title.rendered]]</h3>
         <p>
           [[data.excerpt.rendered]]
-        </p>
+          </p>
         <div class="carriers">
           <img src="http://images.bbycastatic.ca/sf/projects/_content/_weekly/home/applebanner/assets/carriers/fido-logo-m.png" alt="fido">
         </div>
@@ -139,6 +141,17 @@
         return [
           "dataChanged(data)"
         ];
+      }
+
+      _setFallback() {
+       this.data = {
+         title: {
+           rendered: "iPhone Banner"
+         },
+         excerpt: {
+           rendered: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed pharetra mauris. Proin faucibus tellus id dui bibendum, at suscipit arcu faucibus. Sed vitae pharetra arcu. Mauris turpis eros, porta eget dolor in, auctor euismod felis. Vestibulum semper, magna a vulputate vulputate, est justo elementum enim, ut lobortis lectus odio id quam."
+         }
+       }
       }
 
       dataChanged(data) {

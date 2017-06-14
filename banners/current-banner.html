@@ -4,10 +4,11 @@
 <dom-module id="current-ipad-banner">
   <template>
     <iron-ajax
-            auto
-            url="//dev-blog-bbyca.ca.bestbuy.com/wp-json/my-shop/v1/banners-current"
-            handle-as="json"
-            last-response="{{data}}"></iron-ajax>
+        auto
+        url="//dev-blog-bbyca.ca.bestbuy.com/wp-json/wp/v2/banners/{{entryId}}"
+        handle-as="json"
+        last-response="{{data}}"
+        on-error="_setFallback"></iron-ajax>
 
 
     <style>
@@ -108,7 +109,7 @@
              src="http://multimedia.bbycastatic.ca/multimedia/products/1500x1500/104/10486/10486204_2.jpg">
       </div>
       <div class="promo-column">
-        <h3>[[postTitle]]</h3>
+        <h3>[[data.title.rendered]]</h3>
         <p>
           [[data.excerpt.rendered]]
         </p>
@@ -148,12 +149,15 @@
         ];
       }
 
-      dataChanged(data) {
-        console.log(data);
-      }
-
-      getPostTitle(response) {
-         return response.length > 0 ? response[0].post_title : "";
+      _setFallback() {
+        this.data = {
+          title: {
+            rendered: "iPhone Banner"
+          },
+          excerpt: {
+            rendered: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed pharetra mauris. Proin faucibus tellus id dui bibendum, at suscipit arcu faucibus. Sed vitae pharetra arcu. Mauris turpis eros, porta eget dolor in, auctor euismod felis. Vestibulum semper, magna a vulputate vulputate, est justo elementum enim, ut lobortis lectus odio id quam."
+          }
+        }
       }
     }
 
